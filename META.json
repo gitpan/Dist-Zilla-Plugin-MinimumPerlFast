@@ -1,0 +1,64 @@
+{
+   "abstract" : "Fast minimum perl version finder",
+   "author" : [
+      "Leon Timmermans <leont@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.300034, CPAN::Meta::Converter version 2.120921",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Dist-Zilla-Plugin-MinimumPerlFast",
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "Module::Build::Tiny" : "0.021"
+         }
+      },
+      "develop" : {
+         "requires" : {
+            "Pod::Coverage::TrustPod" : "0",
+            "Test::Pod" : "1.41",
+            "Test::Pod::Coverage" : "1.08"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Dist::Zilla::Role::FileFinderUser" : "4.102345",
+            "Dist::Zilla::Role::PrereqSource" : "4.102345",
+            "List::Util" : "0",
+            "Moose" : "0",
+            "MooseX::Types::Perl" : "0.101340",
+            "Perl::MinimumVersion::Fast" : "0",
+            "perl" : "5.006",
+            "strict" : "0",
+            "warnings" : "0"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "File::Find" : "0",
+            "File::Temp" : "0",
+            "Test::More" : "0"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "mailto" : "bug-dist-zilla-plugin-minimumperlfast at rt.cpan.org",
+         "web" : "http://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-MinimumPerlFast"
+      },
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/Leont/dist-zilla-plugin-minimumperlfast.git",
+         "web" : "https://github.com/Leont/dist-zilla-plugin-minimumperlfast"
+      }
+   },
+   "version" : "0.001"
+}
+

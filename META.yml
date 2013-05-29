@@ -1,0 +1,31 @@
+---
+abstract: 'Fast minimum perl version finder'
+author:
+  - 'Leon Timmermans <leont@cpan.org>'
+build_requires:
+  File::Find: 0
+  File::Temp: 0
+  Test::More: 0
+configure_requires:
+  Module::Build::Tiny: 0.021
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.300034, CPAN::Meta::Converter version 2.120921'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Dist-Zilla-Plugin-MinimumPerlFast
+requires:
+  Dist::Zilla::Role::FileFinderUser: 4.102345
+  Dist::Zilla::Role::PrereqSource: 4.102345
+  List::Util: 0
+  Moose: 0
+  MooseX::Types::Perl: 0.101340
+  Perl::MinimumVersion::Fast: 0
+  perl: 5.006
+  strict: 0
+  warnings: 0
+resources:
+  bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Plugin-MinimumPerlFast
+  repository: git://github.com/Leont/dist-zilla-plugin-minimumperlfast.git
+version: 0.001
