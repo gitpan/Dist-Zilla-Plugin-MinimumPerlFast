@@ -1,15 +1,14 @@
 package Dist::Zilla::Plugin::MinimumPerlFast;
-{
-  $Dist::Zilla::Plugin::MinimumPerlFast::VERSION = '0.001';
-}
+$Dist::Zilla::Plugin::MinimumPerlFast::VERSION = '0.002';
 use strict;
 use warnings;
 
 use Moose;
 
-use MooseX::Types::Perl 0.101340 qw( LaxVersionStr );
+use Carp 'croak';
+use MooseX::Types::Perl 0.101340 qw( StrictVersionStr );
 use Perl::MinimumVersion::Fast;
-use List::Util 'max';
+use List::Util qw//;
 
 with(
 	'Dist::Zilla::Role::PrereqSource' => { -version => '4.102345' },
@@ -19,21 +18,37 @@ with(
 	},
 );
 
-has perl => (
+has version => (
 	is      => 'ro',
 	lazy    => 1,
-	isa     => 'version',
-	builder => '_build_perl',
+	isa     => StrictVersionStr,
+	builder => '_build_version',
 );
 
-sub _build_perl {
+has min => (
+	is      => 'ro',
+	lazy    => 1,
+	isa     => StrictVersionStr,
+	default => '5.008'
+);
+
+has max => (
+	is        => 'ro',
+	isa       => StrictVersionStr,
+	required  => 0,
+);
+
+sub _build_version {
 	my $self = shift;
-	return max map { Perl::MinimumVersion::Fast->new(\$_->content)->minimum_version } grep { $_->name =~ /\.(?:t|p[ml])$/i } @{ $self->found_files };
+	return List::Util::max($self->min, map { Perl::MinimumVersion::Fast->new(\$_->content)->minimum_version->stringify } @{ $self->found_files });
 }
 
 sub register_prereqs {
 	my $self = shift;
-	$self->zilla->register_prereqs({ phase => 'runtime' }, perl => $self->perl->stringify);
+	my $version = $self->version;
+	my $max = $self->max;
+	croak "Required perl version $version is higher than maximum $max" if defined $max && $version > $max;
+	$self->zilla->register_prereqs({ phase => 'runtime' }, perl => $version);
 	return;
 }
 
@@ -41,26 +56,28 @@ no Moose;
 
 1;
 
-# ABSTRACT: Fast minimum perl version finder
+# ABSTRACT: Quickly detects the minimum version of Perl required for your dist
 
 __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
-Dist::Zilla::Plugin::MinimumPerlFast - Fast minimum perl version finder
+Dist::Zilla::Plugin::MinimumPerlFast - Quickly detects the minimum version of Perl required for your dist
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 DESCRIPTION
 
 This plugin uses L<Perl::MinimumVersion::Fast> to automatically find the minimum version of Perl required for your dist and adds it to the prereqs.
 
-# In your dist.ini:
-[MinimumPerl]
+ # In your dist.ini:
+ [MinimumPerl]
 
 This plugin will search for files matching C</\.(t|pl|pm)$/i> in the C<lib/>, C<bin/>, and C<t/> directories.
 
